@@ -17,7 +17,13 @@ func main() {
 	// 3. Iterate over an array
 	fmt.Println("Elements in arr2:")
 	for i, v := range arr2 {
+		if i==0{
+			v=0
+		}
 		fmt.Printf("Index %d: %d\n", i, v)
+		if i==0{
+			v=0
+		}
 	}
 
 	// 4. Copy an array
