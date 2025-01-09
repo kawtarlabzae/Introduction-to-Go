@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": 2,
+      "name": "John Smith",
+      "age": 22,
+      "major": "Software Engineering",
+      "address": {
+        "street": "456 Elm St",
+        "city": "Othertown",
+        "state": "Otherstate",
+        "postal-code": ""
+      },
+      "courses": [
+        {
+          "code": "CS201",
+          "name": "Data Structures",
+          "credit": 4
+        }
+      ]
+    }
+  ]
+}
