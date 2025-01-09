@@ -15,11 +15,11 @@ func main() {
 			defer wg.Done()
 			SquareNumber(i)
 		}(num)
-		wg.Wait()
+		
 	}
+	wg.Wait()
 }
 
 func SquareNumber(number int) {
-
 	fmt.Printf("the square number of %d is %d\n", number, number*number)
 }
