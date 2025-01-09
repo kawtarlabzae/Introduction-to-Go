@@ -3,171 +3,124 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 )
-func countOccurrences(names []Person) map[string]int {
-	map1 := make(map[string]int)
 
-	for _, val := range names {
-		_, exists := map1[val.Eductaion]
-		if exists {
-			map1[val.Eductaion]++
-		} else {
-			map1[val.Eductaion] = 1
-		}
-	}
-
-	return map1
-}
 type Person struct {
-	Name  string `json:"name"`
-	Age   int `json:"age"`
-	Eductaion string `json:"education"`
-	Salary int `json:"salary"`
+	Name      string `json:"name"`
+	Age       int    `json:"age"`
+	Salary    int    `json:"salary"`
+	Education string `json:"education"`
+}
+
+type InputData struct {
+	People []Person `json:"people"`
+}
+
+type OutputData struct {
+	AverageAge               float64            `json:"average_age"`
+	YoungestPersons          []string           `json:"youngest_persons"`
+	OldestPersons            []string           `json:"oldest_persons"`
+	AverageSalary            float64            `json:"average_salary"`
+	HighestSalaryPersons     []string           `json:"highest_salary_persons"`
+	LowestSalaryPersons      []string           `json:"lowest_salary_persons"`
+	CountsByEducationLevel   map[string]int     `json:"counts_by_education_level"`
 }
 
 func main() {
-	f, err := os.Create("file.json")
-	file, err := os.ReadFile("file-person.json")
+	// Read input JSON using os.ReadFile
+	inputFile, err := os.ReadFile("file-person.json")
 	if err != nil {
-		fmt.Println("Error opening file:", err)
+		fmt.Printf("Error reading input file: %v\n", err)
 		return
 	}
 
-	var people []Person
-	err = json.Unmarshal(file, &people)
+	var inputData InputData
+	err = json.Unmarshal(inputFile, &inputData)
 	if err != nil {
-		fmt.Println("Error unmarshalling JSON:", err)
+		fmt.Printf("Error parsing JSON: %v\n", err)
 		return
 	}
 
+	// Variables for calculations
+	var totalAge, totalSalary int
+	minAge, maxAge := inputData.People[0].Age, inputData.People[0].Age
+	minSalary, maxSalary := inputData.People[0].Salary, inputData.People[0].Salary
+	youngestPersons := []string{}
+	oldestPersons := []string{}
+	highestSalaryPersons := []string{}
+	lowestSalaryPersons := []string{}
+	countsByEducationLevel := make(map[string]int)
 
+	// Process the data
+	for _, person := range inputData.People {
+		totalAge += person.Age
+		totalSalary += person.Salary
 
-	var average float64
-	average=0
-	for _, person := range people {
-		average= average + float64(person.Age)
-	}
-	average=average/float64(len(people))
-	fmt.Println("The average age is: ",average)
-
-	YoungestPerson:= make([]Person, len(people))
-	ages:= make([]int, len(people)) 
-	for i, person := range people {
-		ages[i]=person.Age
-	}
-	var smallage int
-	smallage=ages[0]
-	for _, age := range ages{
-		if smallage>=age{
-			smallage=age
+		// Track youngest and oldest
+		if person.Age < minAge {
+			minAge = person.Age
+			youngestPersons = []string{person.Name}
+		} else if person.Age == minAge {
+			youngestPersons = append(youngestPersons, person.Name)
 		}
-	}
-	fmt.Println("Names of the youngest persons")
-	for _, person := range people {
-		if person.Age==smallage{
-		YoungestPerson= append(YoungestPerson, person)
-		fmt.Println(person.Name)
 
+		if person.Age > maxAge {
+			maxAge = person.Age
+			oldestPersons = []string{person.Name}
+		} else if person.Age == maxAge {
+			oldestPersons = append(oldestPersons, person.Name)
 		}
-	}
 
-
-
-
-	OlderPerson:= make([]Person, len(people))
-	
-	var bigage int
-	bigage=ages[0]
-	for _, age := range ages{
-		if bigage<=age{
-			bigage=age
+		// Track highest and lowest salary
+		if person.Salary > maxSalary {
+			maxSalary = person.Salary
+			highestSalaryPersons = []string{person.Name}
+		} else if person.Salary == maxSalary {
+			highestSalaryPersons = append(highestSalaryPersons, person.Name)
 		}
-	}
-	fmt.Println("Names of the oldest persons")
-	for _, person := range people {
-		if person.Age==bigage{
-			OlderPerson= append(OlderPerson, person)
-			fmt.Println(person.Name)}
-	}
-	
 
-	var averageSalary float64
-	averageSalary=0
-	for _, person := range people {
-		averageSalary= averageSalary + float64(person.Salary)
-	}
-	averageSalary=averageSalary/float64(len(people))
-	fmt.Println("Average Salary is: ",averageSalary)
-
-	
-
-	RichPerson:= make([]Person, len(people))
-	fmt.Println("Names of the persons with biggest salary")
-	var bigsalary int
-	salary:= make([]int, len(people)) 
-	for i, person := range people {
-		salary[i]=person.Salary
-	}
-	bigsalary=salary[0]
-	for _, salar := range salary{
-		if bigsalary<=salar{
-			bigsalary=salar
+		if person.Salary < minSalary {
+			minSalary = person.Salary
+			lowestSalaryPersons = []string{person.Name}
+		} else if person.Salary == minSalary {
+			lowestSalaryPersons = append(lowestSalaryPersons, person.Name)
 		}
-	}
-	for _, person := range people {
-		if person.Salary==bigsalary{
-			RichPerson= append(RichPerson, person)
-			fmt.Println(person.Name)}
-	}
-	
-	fmt.Println("Names of the persons with smallest salary")
-	poorPerson:= make([]Person, len(people))
 
-	var smallsalary int
-	
-	for i, person := range people {
-		salary[i]=person.Salary
-	}
-	smallsalary=salary[0]
-	for _, salar := range salary{
-		if smallsalary>=salar{
-			smallsalary=salar
-			
-		}
-	}
-	for _, person := range people {
-		if person.Salary==smallsalary{
-			poorPerson= append(poorPerson, person)
-			fmt.Println(person.Name)}
+		// Count education levels
+		countsByEducationLevel[person.Education]++
 	}
 
-	occurences:=countOccurrences(people)
-	fmt.Println("occurences related to education")
-	for key, value := range occurences {
-		fmt.Printf("Education: %s, Value: %d\n", key, value)
+	// Calculate averages
+	averageAge := float64(totalAge) / float64(len(inputData.People))
+	averageSalary := float64(totalSalary) / float64(len(inputData.People))
+
+	// Prepare output
+	outputData := OutputData{
+		AverageAge:               averageAge,
+		YoungestPersons:          youngestPersons,
+		OldestPersons:            oldestPersons,
+		AverageSalary:            averageSalary,
+		HighestSalaryPersons:     highestSalaryPersons,
+		LowestSalaryPersons:      lowestSalaryPersons,
+		CountsByEducationLevel:   countsByEducationLevel,
 	}
 
-
-
-
-	b, err := json.Marshal(occurences)
-    if err != nil {
-        log.Fatalf("Unable to marshal due to %s\n", err)
-    }
-
-	
-	
+	// Write output JSON
+	outputFile, err := os.Create("output.json")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("Error creating output file: %v\n", err)
 		return
 	}
-	l, err := f.WriteString(string(b))
+	defer outputFile.Close()
+
+	encoder := json.NewEncoder(outputFile)
+	encoder.SetIndent("", "    ")
+	err = encoder.Encode(outputData)
 	if err != nil {
-		fmt.Println(err)
-        f.Close()
+		fmt.Printf("Error writing JSON: %v\n", err)
 		return
 	}
-	fmt.Println(l, "bytes written successfully")
+
+	fmt.Println("Output written to output.json")
 }

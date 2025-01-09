@@ -1,4 +1,5 @@
- [
+{
+  "people": [
     {
       "name": "John",
       "age": 25,
@@ -120,3 +121,4 @@
       "education": "Bachelor's"
     }
   ]
+}

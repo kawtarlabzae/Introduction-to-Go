@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Alice",
+      "email": "alice@example.com",
+      "address": {
+        "street": "123 Maple Street",
+        "city": "Wonderland",
+        "zip": "12345"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Bob",
+      "email": "bob@example.com",
+      "address": {
+        "street": "456 Oak Avenue",
+        "city": "Nowhere",
+        "zip": "67890"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Charlie",
+      "email": "charlie@example.com",
+      "address": {
+        "street": "789 Pine Road",
+        "city": "Somewhere",
+        "zip": "11223"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Charlie",
+      "email": "charlie@example.com",
+      "address": {
+        "street": "789 Pine Road",
+        "city": "Somewhere",
+        "zip": "11223"
+      }
+    }
+  ]
+}
