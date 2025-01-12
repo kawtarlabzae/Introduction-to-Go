@@ -1,6 +1,3 @@
-Here is a detailed markdown documentation for the provided project files:
-
----
 
 # Project Documentation
 
