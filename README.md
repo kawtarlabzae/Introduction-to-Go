@@ -138,7 +138,7 @@ This structure ensures a clean and modular organization for the project.
    - View sales reports for all orders or a specific date range.
    - Example query to retrieve sales for a date range:
      ```http
-     GET /reports/sales?start_date=2025-01-01T00:00:00Z&end_date=2025-01-31T23:59:59Z
+     GET /reports/sales?start_date=2025-01-01&end_date=2025-01-31
      ```
    - Generate a sales report instantly:
      ```http
