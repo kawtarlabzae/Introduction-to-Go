@@ -33,7 +33,7 @@ This project is a fully functional system for managing customers, authors, books
 
 1. **Clone the Repository**:
    ```bash
-   git clone [<repository-url>](https://github.com/kawtarlabzae/Introduction-to-Go.git)
+   git clone https://github.com/kawtarlabzae/Introduction-to-Go.git
    ```
 
 2. **Navigate to the Final Project Folder**:
