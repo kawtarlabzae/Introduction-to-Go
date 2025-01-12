@@ -1,6 +1,3 @@
-Here is the markdown documentation for the newly provided controller files:
-
----
 
 # Project Documentation
 
