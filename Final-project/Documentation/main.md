@@ -1,6 +1,3 @@
-Here is the markdown documentation for the provided `main.go` file:
-
----
 
 # Project Documentation
 
